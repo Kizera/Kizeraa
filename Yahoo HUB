@@ -1,0 +1,192 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("YaHoo", "DarkTheme")
+local Tab = Window:NewTab("Farm")
+local Section = Tab:NewSection("AutoFarm")
+
+Section:NewButton("Anti AFk", "Anti AFK", function()
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
+warn("Anti-Afk has Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local Weaponlist = {}
+local Weapon = nil
+
+for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+    table.insert(Weaponlist,v.Name)
+end
+
+Section:NewDropdown("select weapon", " ", Weaponlist, function(currentOption)
+    Weapon = currentOption
+end)
+
+Section:NewToggle("Auto Equip", " ", function(a)
+AutoEquiped = a
+end)
+
+spawn(function()
+while wait() do
+if AutoEquiped then
+pcall(function()
+game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(Weapon))
+end)
+end
+end
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("Auto Quest", "Auto get quest", function()
+	if game:GetService("Players").LocalPlayer.PlayerGui.Menu.QuestFrame.Visible == false then
+	   fireclickdetector(workspace.QuestBoards.TurtleStudentBoard.News1["Defeat 10 Evil Turtle Students"].ClickDetector)
+	   
+	else
+		print("Auto Quest working")
+	end
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewToggle("Auto Farm", "ToggleInfo", function(state)
+    if state then
+_G.AutoFarm = true
+while _G.AutoFarm do wait()
+	pcall(function()
+	for i,v in pairs(game:GetService("Workspace").Live:GetDescendants()) do
+	if v.Name == "Evil Turtle Student" then
+	if v.Humanoid.Health >= 0 then
+	repeat task.wait()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,7)
+	until _G.AutoFarm == false or v.Humanoid.Health <= 0
+	
+				end
+			end
+		end
+	end)
+end
+    else
+_G.AutoFarm = false
+while _G.AutoFarm do wait()
+	pcall(function()
+for i,v in pairs(game:GetService("Workspace").Live:GetDescendants()) do
+	if v.Name == "Evil Turtle Student" then
+	if v.Humanoid.Health >= 0 then
+	repeat task.wait()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,7)
+	until _G.AutoFarm == false or v.Humanoid.Health <= 0
+	
+				end
+			end
+		end
+	end)
+end
+    end
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewToggle("KillAura", "It's Kill Aura", function(state)
+    if state then
+    _G.AutoFarm = true
+		while _G.AutoFarm do wait()
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("BladeCombatRemote"):FireServer()
+		end
+    else
+     _G.AutoFarm = false
+		while _G.AutoFarm do wait()
+			game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("BladeCombatRemote"):FireServer()
+		end
+        print("Kill Aura Off")
+    end
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.L, function()
+	Library:ToggleUI()
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local Tab = Window:NewTab("Teleport")
+local Section = Tab:NewSection("tp chest")
+Section:NewButton("Anti AFK", "Turn on For AFK", function()
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
+warn("Anti-AFK has Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("1) TP ItemSpawn ( One Time )", "TP to Item Spawn", function()
+for i,v in pairs(game:GetService("Workspace").Drops:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame
+wait(0.3)
+end
+end
+warn("TP ItemSpawn ( One Time ) Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("2) TP ItemSpawn ( Loop )", "Loop TP for AFK Don't Forgot ON Anti AFK", function()
+_G.loop = true;
+while _G.loop do wait()
+
+for i,v in pairs(game:GetService("Workspace").Drops:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame
+wait(0.3)
+end
+end
+end
+warn("TP ItemSpawn ( Loop ) Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("3) Stop TP ItemSpawn (Loop)", "Click For Stop Loop", function()
+_G.loop = false;
+while _G.loop do wait()
+
+for i,v in pairs(game:GetService("Workspace").Drops:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame
+wait(0.3)
+end
+end
+end
+warn("Stop TP ItemSpawn (Loop) Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("4) TP Chests ( One Time )", "TP all chests and Stop", function()
+for i,v in pairs(game:GetService("Workspace").Chests:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame
+wait(0.3)
+end
+end
+warn("TP Chests ( One Time ) Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("5) TP Chests ( Loop )", "Loop TP for AFK Don't Forgot ON Anti AFK", function()
+_G.loop = true;
+while _G.loop do wait()
+
+for i,v in pairs(game:GetService("Workspace").Chests:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame
+wait(0.3)
+end
+end
+end
+
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Section:NewButton("6) Stop TP Chests (Loop)", "Click For Stop Loop", function()
+_G.loop = false;
+while _G.loop do wait()
+
+for i,v in pairs(game:GetService("Workspace").Chests:GetDescendants()) do
+    if v.Name == "TouchInterest" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.CFrame
+wait(0.3)
+end
+end
+end
+warn("Stop TP Chests (Loop) Loaded")
+end)
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
